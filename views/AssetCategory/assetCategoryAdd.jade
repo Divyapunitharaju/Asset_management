@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    title Add Asset Category
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css")
+  body
+    .container.my-5
+      h3.text-center Add  Asset Category
+      form(action='/assetCategories' method='POST')
+        .form-group
+          label.mb-2(for='name') Category Name
+          input#name.form-control(type='text', name='name', required placeholder='Enter Category Name')
+        button.btn.btn-primary.mt-3(type='submit') Add Category

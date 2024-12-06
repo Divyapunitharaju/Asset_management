@@ -1,0 +1,56 @@
+doctype html
+html
+  head
+    title Asset 
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css")
+    link(rel="stylesheet", href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css")
+    link(rel="stylesheet" ,href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
+    script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+    script(src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js")
+  body
+  .container
+    .d-flex.justify-content-end
+      a.btn.btn-outline-danger.fa.fa-eye.py-3.px-4.fs-5.my-3(href="/stock")     View Stock
+    .container.my-5
+      form(method="get", action="/assets")
+        .row.mb-3
+          .col-md-6
+            input#search.form-control(type="text", name="make", placeholder="Search")
+          .col-md-3
+            select#assetType.form-control(name="name")
+              option(value="") Select
+              option(value="Laptop") Laptop
+              option(value="Phone") Phone
+              option(value="Printer") Printer
+              option(value="Monitor") Monitor
+          .col-md-3
+            button.btn.btn-primary(type="submit") Search
+    .container.my-5
+      a.btn.btn-secondary.my-3(href='/assets/add') Add New +
+      table.table.table-striped#asset
+        thead
+          tr
+            th Serial Number
+            th Make
+            th Model
+            th Name
+            th Status
+            th Actions
+        tbody
+          if assets && assets.length > 0
+            each asset in assets
+              tr
+               
+                td= asset.serialNo
+                td= asset.make
+                td= asset.model
+                td= asset.name
+                td= asset.status
+                td
+                  a.btn.btn-warninga.btn.btn-warning(href=`/assets/edit/${asset.id}`) Edit
+ 
+
+    script.
+      $(document).ready(function() {
+        $('#asset').DataTable();
+      });

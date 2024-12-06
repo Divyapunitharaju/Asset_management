@@ -1,0 +1,35 @@
+doctype html
+html
+  head
+    title Edit Asset
+    link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
+  body
+    .container
+      h1 Edit Asset
+      form(action=`/assets/${asset.id}?_method=PUT`, method="POST").w-50.m-auto
+        input(type="hidden", name="_method", value="PUT")
+        .form-group.mb-3
+          label.mb-2(for="serialNo") Serial Number
+          input.form-control(name="serialNo", value=asset.serialNo, required)
+        .form-group.mb-3
+          label.mb-2(for="name") Category
+          input.form-control(name="name", value=asset.name, required)
+        .form-group.mb-3
+          label.mb-2(for="make") Make
+          input.form-control(name="make", value=asset.make, required)
+        .form-group.mb-3
+          label(for="model") Model
+          input.form-control(name="model", value=asset.model, required)
+        .form-group.mb-3
+          label.mb-2(for="status") Status
+          select.form-control(name="status", required)
+            option(value="Available", selected=asset.status === 'Available') Available
+            option(value="Issued", selected=asset.status === 'Issued') Issued
+            option(value="Obsolete", selected=asset.status === 'Obsolete') Obsolete
+        .form-group.mb-3
+          label.mb-2(for="branch") Branch
+          input.form-control(name="branch", value=asset.branch, required)
+        .form-group.mb-3
+          label.mb-2(for="value") Value
+          input.form-control(name="value", value=asset.value, required)
+        button.btn.btn-primary(type="submit") Update Asset

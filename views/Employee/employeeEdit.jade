@@ -1,0 +1,54 @@
+//- doctype html 
+//- html 
+//-   head
+//-    title Employee
+//-    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css")
+//-    link(rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css")
+//-    script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+//-    script(src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js")
+//-   body 
+//- .container
+//-     h3.text-center.mt-5 Edit Employee
+
+//- form(action=`/employees/${employee.id}?_method=PUT`, method="POST").w-50.m-auto
+//- .w-50.m-auto
+//-   input(type="hidden", name="_method", value="PUT")
+//-   .mb-3
+//-     label(for="name") Name:
+//-     input#name.form-control(type="text",  required, name="name", value=employee.name)
+//-   .mb-3
+//-     label(for="position") Position:
+//-     input#position.form-control(type="text", required,  name="position", value=employee.position)
+//-   .mb-3
+//-     label(for="status") Status:
+//-     select#status.form-control(name="status")
+//-       option(value="active", selected=employee.status === 'active') Active
+//-       option(value="inactive", selected=employee.status === 'inactive') Inactive
+//-   .mb-3
+//-       button.btn.btn-primary(type="submit") Edit
+doctype html
+html
+  head
+    title Employee
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css")
+    link(rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css")
+    script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+    script(src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js")
+  body
+    .container
+      h3.text-center.mt-5 Edit Employee
+      form(action=`/employees/${employee.id}?_method=PUT`, method="POST").w-50.m-auto
+        input(type="hidden", name="_method", value="PUT")
+        .mb-3
+          label(for="name") Name:
+          input#name.form-control(type="text", required, name="name", value=employee.name)
+        .mb-3
+          label(for="position") Position:
+          input#position.form-control(type="text", required, name="position", value=employee.position)
+        .mb-3
+          label(for="status") Status:
+          select#status.form-control(name="status")
+            option(value="active", selected=employee.status === 'active') Active
+            option(value="inactive", selected=employee.status === 'inactive') Inactive
+        .mb-3
+          button.btn.btn-primary(type="submit") Edit

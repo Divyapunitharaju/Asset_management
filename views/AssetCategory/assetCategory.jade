@@ -1,0 +1,29 @@
+doctype html
+html
+  head
+    title AssetCategory List
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css")
+    link(rel="stylesheet", href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css")
+    script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+    script(src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js")
+  body
+    .container.my-5
+      a.btn.btn-secondary.my-3(href='/assetCategories/add') Add New +
+      table.table.table-striped#asset
+        thead
+          tr
+            th ID
+            th Category
+            th Actions
+        tbody
+          if assetCategories && assetCategories.length > 0
+            each category in assetCategories
+              tr
+                td= category.id
+                td= category.name
+                td
+                 a.btn.btn-warning(href=`/assetCategories/edit/${category.id}`) Edit
+    script.
+      $(document).ready(function() {
+        $('#asset').DataTable();
+      });
