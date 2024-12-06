@@ -1,84 +1,96 @@
-const express=require('express')
-const route=express.Router()
+const express = require('express')
+const route = express.Router()
+const AssetCategory = require('../model/assetCategory')
 
-const AssetCategory=require('../model/assetCategory')
 
-route.post('/',async(req,res)=>{
-     const {name}=req.body
-     try{
-        const assetCategory=await AssetCategory.create({name})
-        res.redirect('/assetCategories')
-     }catch{
-         console.error(err);
-         res.json({message:"Error"})
-     }
-     
-})
+route.post('/', async (req, res) => {
+    const { name } = req.body
+    try {
+        if (!name) {
+            return res.status(400).json({ message: 'Name is required' })
+        }
 
-route.get('/',async(req,res)=>{
-    try{
-        const assetCategories=await AssetCategory.findAll()
-        res.render('AssetCategory/assetCategory',{assetCategories})
+        await AssetCategory.create({ name })
+        res.redirect('/assetCategories') 
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({ message: 'Error while creating asset category' })
     }
-    catch{
-        console.error(err);
-        res.json({message:"Error"})
-    }
-    
-
 })
 
 
-route.get('/add',(req,res)=>{
+route.get('/', async (req, res) => {
+    try {
+        const assetCategories = await AssetCategory.findAll()
+        res.render('AssetCategory/assetCategory', { assetCategories })
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({ message: 'Error while fetching asset categories' })
+    }
+})
+
+
+route.get('/add', (req, res) => {
     res.render('AssetCategory/assetCategoryAdd')
 })
 
-route.get('/:id',async(req,res)=>{
-    const {id}=req.params
-    try{
-        const assetCategory=await AssetCategory.findByPk(id)
+
+route.get('/:id', async (req, res) => {
+    const { id } = req.params
+    try {
+        const assetCategory = await AssetCategory.findOne({ where: { id } })
+
+        if (!assetCategory) {
+            return res.status(404).json({ message: 'Asset Category not found' })
+        }
+
         res.json(assetCategory)
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({ message: 'Error while fetching asset category by ID' })
     }
-    catch{
-        console.error(err);
-        res.json({message:"Error"})
-    }
-   
 })
 
-route.put('/:id',async(req,res)=>{
-    const {id}=req.params
-    const {name}=req.body
-    try{
-        const assetCategory=await AssetCategory.findByPk(id)
-        if(assetCategory)
-        {
-          const AssetUpdate=  await assetCategory.update({name})
-          res.redirect('/assetCategories')
+
+route.put('/:id', async (req, res) => {
+    const { id } = req.params
+    const { name } = req.body
+
+    try {
+        const assetCategory = await AssetCategory.findOne({ where: { id } })
+
+        if (!assetCategory) {
+            return res.status(404).json({ message: 'Asset Category not found' })
         }
-    }
-    catch{
-        console.error(err);
-        res.json({message:"Error"})
-    }
-})
 
-route.get('/edit/:id',async(req,res)=>{
-    const {id}=req.params
-    try{
-        const assetCategory=await AssetCategory.findByPk(id)
-        if(assetCategory)
-        {
-          res.render('AssetCategory/assetCategoryEdit',{assetCategory})
+        if (!name) {
+            return res.status(400).json({ message: 'Name is required' })
         }
+
+        await assetCategory.update({ name })
+        res.redirect('/assetCategories') 
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({ message: 'Error while updating asset category' })
     }
-    catch{
-        console.error(err);
-        res.json({message:"Error"})
-    } 
 })
 
 
-module.exports=route
+route.get('/edit/:id', async (req, res) => {
+    const { id } = req.params;
 
+    try {
+        const assetCategory = await AssetCategory.findOne({ where: { id } })
 
+        if (!assetCategory) {
+            return res.status(404).render('error', { message: 'Asset Category not found' })
+        }
+
+        res.render('AssetCategory/assetCategoryEdit', { assetCategory })
+    } catch (err) {
+        console.error(err)
+        res.status(500).render('error', { message: 'Error while fetching asset category for editing' })
+    }
+})
+
+module.exports = route
