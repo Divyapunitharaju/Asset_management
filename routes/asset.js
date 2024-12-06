@@ -59,7 +59,7 @@ const Asset = require('../model/asset')
 const { Op } = require('sequelize')
 
 
-route.post('/',async(req, res) => {
+route.post('/',async(req,res) => {
     const {serialNo,name,model,make,status,branch,value } = req.body
     try {
         const asset = await Asset.create({ serialNo,name,model,make,status,branch,value})
@@ -71,7 +71,7 @@ route.post('/',async(req, res) => {
 });
 
 
-route.get('/',async(req, res) => {
+route.get('/',async(req,res) => {
     const { name,search,make,model} = req.query;
     try {
         const whereClause = {};
@@ -88,7 +88,7 @@ route.get('/',async(req, res) => {
 });
 
 
-route.get('/add',(req, res) => {
+route.get('/add',(req,res) => {
     res.render('Asset/assetAdd');
 });
 
@@ -108,13 +108,13 @@ route.get('/edit/:id',async(req,res) => {
     }
 });
 
-route.put('/:id',async(req, res) => {
-    const { id } = req.params;
-    const { serialNo, name, model, make, status, branch, value } = req.body;
+route.put('/:id',async(req,res) => {
+    const {id} = req.params;
+    const {serialNo,name,model,make,status,branch,value} = req.body;
     try {
         const asset = await Asset.findByPk(id);
         if (asset) {
-            const updatedAsset = await asset.update({ serialNo, name, model, make, status, branch, value });
+            const updatedAsset = await asset.update({serialNo,name,model,make,status,branch,value});
             res.redirect('/assets'); 
         } else {
             res.render('error', { message: 'Asset not found' });
@@ -143,5 +143,5 @@ route.put('/:id',async(req, res) => {
 //     }
 // });
 
-module.exports = route;
+module.exports=route;
 

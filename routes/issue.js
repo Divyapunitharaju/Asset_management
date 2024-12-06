@@ -14,17 +14,17 @@ const AssetHistory=require('../model/assetHistory')
 //   res.json(employees);
 // });
 
-route.get('/', async (req, res) => {
-  const assets = await Asset.findAll({ where: { status: 'Available' } })
-  const employees = await Employee.findAll({ where: { status: 'active' } })
-  res.render('issue', { assets, employees })
+route.get('/',async(req,res) => {
+  const assets = await Asset.findAll({where:{status:'Available'}})
+  const employees = await Employee.findAll({where:{status:'active'}})
+  res.render('issue',{assets,employees})
 });
 
 
-route.post('/', async (req, res) => {
+route.post('/',async(req,res) => {
   const {assetId,employeeId} = req.body;
 
-  await Asset.update({status:'Issued'},{ where:{id: assetId}});
+  await Asset.update({status:'Issued'},{where:{id:assetId}});
 
   await AssetHistory.create({
       assetId,

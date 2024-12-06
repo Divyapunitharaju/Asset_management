@@ -27,7 +27,8 @@ route.get('/',async(req,res)=>{
         // res.json({stock,totalValue})
     }
     catch{
-        res.json("Error")
+        console.error(err);
+        res.json({message:"Error"})
     }
     
 })

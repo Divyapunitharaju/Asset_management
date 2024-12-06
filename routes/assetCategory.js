@@ -9,7 +9,8 @@ route.post('/',async(req,res)=>{
         const assetCategory=await AssetCategory.create({name})
         res.redirect('/assetCategories')
      }catch{
-         res.json("Error")
+         console.error(err);
+         res.json({message:"Error"})
      }
      
 })
@@ -20,7 +21,8 @@ route.get('/',async(req,res)=>{
         res.render('AssetCategory/assetCategory',{assetCategories})
     }
     catch{
-        res.json("Error")
+        console.error(err);
+        res.json({message:"Error"})
     }
     
 
@@ -38,7 +40,8 @@ route.get('/:id',async(req,res)=>{
         res.json(assetCategory)
     }
     catch{
-        res.json("Error")
+        console.error(err);
+        res.json({message:"Error"})
     }
    
 })
@@ -55,7 +58,8 @@ route.put('/:id',async(req,res)=>{
         }
     }
     catch{
-        res.json("Error")
+        console.error(err);
+        res.json({message:"Error"})
     }
 })
 
@@ -69,7 +73,8 @@ route.get('/edit/:id',async(req,res)=>{
         }
     }
     catch{
-        res.json("Error")
+        console.error(err);
+        res.json({message:"Error"})
     } 
 })
 

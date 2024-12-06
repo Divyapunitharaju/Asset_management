@@ -11,7 +11,8 @@ route.post('/',async(req, res) => {
         res.redirect('/employees')
     }
     catch {
-         res.json("Error")
+        console.error(err);
+        res.json({mesage:"Error"})
     }
 
 })
@@ -30,7 +31,8 @@ route.get('/',async(req,res)=>{
         res.render('Employee/employee',{employees})
     }
     catch{
-        res.json("Error")
+        console.error(err);
+        res.json({mesage:"Error"})
     }
     
 })
@@ -45,11 +47,11 @@ route.get('/',async(req,res)=>{
 //     } 
     
 // })
-route.get('/add',(req, res) => {
+route.get('/add',(req,res) => {
     res.render('Employee/employeeAdd');
 })
 
-route.get('/edit/:id',async(req, res) => {
+route.get('/edit/:id',async(req,res) => {
     const {id} = req.params;
     try {
         const employee = await Employee.findByPk(id)
@@ -59,7 +61,8 @@ route.get('/edit/:id',async(req, res) => {
             res.redirect('/employees')
         }
     } catch {
-        res.json("Error");
+        console.error(err);
+        res.json({mesage:"Error"})
     }
 });
 
@@ -94,7 +97,8 @@ route.put('/:id',async(req,res) => {
             res.redirect('/employees');
         }
     } catch (error) {
-        res.json("Error");
+        console.error(err);
+        res.json({mesage:"Error"})
     }
 });
 
